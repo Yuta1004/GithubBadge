@@ -24,7 +24,8 @@ def update_badge_status(badge_id, status):
         return -1
 
     message = "ok" if status == 0 else "failed"
-    cur.execute("UPDATE badge SET message = ? WHERE id = ?", (message, badge_id))
+    color = "success" if status == 0 else "important"
+    cur.execute("UPDATE badge SET message = ?, color = ? WHERE id = ?", (message, color, badge_id))
     connect.commit()
     cur.close()
     connect.close()
