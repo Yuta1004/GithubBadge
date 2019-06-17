@@ -16,6 +16,24 @@ def get_badge_status(badge_id):
         return ("error", "badge not found",  ShieldsColor.CRITICAL.value)
 
 
+def update_badge_status(badge_id, status):
+    connect = sqlite3.connect("badges.db")
+    cur = connect.cursor()
+    cur.execute("SELECT * FROM badge WHERE id = ?", (badge_id, ))
+    if len(cur.fetchall()) == 0:
+        return -1
+
+    message = "ok" if status == 0 else "failed"
+    cur.execute("UPDATE badge SET message = ? WHERE id = ?", (message, badge_id))
+    connect.commit()
+    cur.close()
+    connect.close()
+    return 0
+
+
 if __name__ == '__main__':
     print(get_badge_status("test"))
+    print(get_badge_status("badge"))
+    print(update_badge_status("test", 0))
+    print(update_badge_status("badge", 0))
     print(get_badge_status("badge"))
