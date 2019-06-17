@@ -24,7 +24,7 @@ def shields(label, message, color):
     shields_url = "https://img.shields.io/static/v1.svg?label=<LABEL>&message=<MESSAGE>&color=<COLOR>"
     shields_url = shields_url.replace("<LABEL>", label)
     shields_url = shields_url.replace("<MESSAGE>", message)
-    shields_url = shields_url.replace("<COLOR>", color.value)
+    shields_url = shields_url.replace("<COLOR>", color if type(color) == str else color.value)
     return shields_url
 
 
