@@ -31,7 +31,7 @@ def exec_script(badge_id):
     if script_name == -1:
         return -1
 
-    returncode = subprocess.run("./scripts/" + script_name).returncode
+    returncode = subprocess.run("cd scripts && ./" + script_name, shell=True).returncode
     clean_dir("./scripts")
     return returncode
 
