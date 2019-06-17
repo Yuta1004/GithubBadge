@@ -11,7 +11,7 @@ def get_badge_status(badge_id):
     connect.close()
 
     if len(fetch_result) > 0:
-        return fetch_result[0]
+        return fetch_result[0][1:]
     else:
         return ("error", "badge not found",  ShieldsColor.CRITICAL.value)
 
