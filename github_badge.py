@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect
 from shields import ShieldsColor, shields
-from badge_status import get_badge_status
+from badge_status import get_badge_status, update_badge_status
+from exec_script import exec_script
 
 flask = Flask(__name__)
 base_url = ""
@@ -21,6 +22,13 @@ def get_badge():
     (label, message, color) = get_badge_status(badge_id)
     badge_url = shields(label, message, color)
     return redirect(badge_url)
+
+
+@flask.route(base_url + "/webhook/<badge_id>", methods=["GET", "POST"])
+def webhook(badge_id):
+    returncode = exec_script(badge_id)
+    update_result = update_badge_status(badge_id, returncode)
+    return str(update_result)
 
 
 if __name__ == '__main__':
